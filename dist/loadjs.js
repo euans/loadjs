@@ -225,7 +225,7 @@ function loadFiles(paths, callbackFn, args) {
 function loadjs(paths, arg1, arg2) {
   var bundleId,
       args;
-
+  paths = (Array.isArray(paths) ? paths : [paths]).filter( ( elm ) => elm.length );
   // bundleId (if string)
   if (arg1 && arg1.trim) bundleId = arg1;
 
