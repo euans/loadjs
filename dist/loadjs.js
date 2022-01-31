@@ -101,7 +101,7 @@ function executeCallbacks(args, depsNotFound) {
 function loadFile(path, callbackFn, args, numTries) {
   var doc = document,
       async = args.async,
-      once = args.once === undefined ? true : args.once,
+      once = args.once === undefined ? false : args.once,
       maxTries = (args.numRetries || 0) + 1,
       beforeCallbackFn = args.before || devnull,
       pathname = path.replace(/[\?|#].*$/, ''),
