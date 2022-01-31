@@ -101,6 +101,7 @@ function executeCallbacks(args, depsNotFound) {
 function loadFile(path, callbackFn, args, numTries) {
   var doc = document,
       async = args.async,
+      once = args.once === undefined ? true : args.once,
       maxTries = (args.numRetries || 0) + 1,
       beforeCallbackFn = args.before || devnull,
       pathname = path.replace(/[\?|#].*$/, ''),
@@ -112,6 +113,7 @@ function loadFile(path, callbackFn, args, numTries) {
 
   if (/(^css!|\.css$)/.test(pathname)) {
     // css
+    if ( once && Array.from(doc.querySelectorAll('link')).some(elm => elm.href.includes(pathStripped)) ) return;
     e = doc.createElement('link');
     e.rel = 'stylesheet';
     e.href = pathStripped;
@@ -131,6 +133,7 @@ function loadFile(path, callbackFn, args, numTries) {
     e.src = pathStripped;    
   } else {
     // javascript
+    if ( once && Array.from(document.querySelectorAll('script')).some(elm => elm.src.includes(pathStripped)) ) return;
     e = doc.createElement('script');
     e.src = path;
     e.async = async === undefined ? true : async;
